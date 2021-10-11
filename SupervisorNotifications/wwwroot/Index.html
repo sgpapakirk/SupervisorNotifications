@@ -50,7 +50,7 @@
                 <div class="form-group col-md-6 offset-md-3">
                     <label for="ddlSupervisorId">Supervisor</label>
                     <select id="ddlSupervisorId" name="ddlSupervisor" class="form-control" ng-model="SelectedSupervisor"
-                            ng-options="supervisor as supervisor for supervisor in Supervisors" required></select>
+                            ng-options="user.Value as user.Text for user in Supervisors" required></select>
                     <span style="color: red" ng-show="ShowSupervisorValidation()">Supervisor is required.</span>
                 </div>
             </div>

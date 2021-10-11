@@ -19,13 +19,15 @@ app.controller('appController', function ($scope, $http, $location) {
                 $scope.LastName = "";
                 $scope.Email = "";
                 $scope.PhoneNumber = "";
-                $scope.SelectedSupervisor = "(select a supervisor)";
+                $scope.SelectedSupervisor = ""; //This sets the 1st (default) item, as the selected one in the list
 
                 //Reset the validation of these controls:
                 $scope.frmSupervisorNotification.txtFirstName.$setPristine();
                 $scope.frmSupervisorNotification.txtFirstName.$setUntouched();
                 $scope.frmSupervisorNotification.txtLastName.$setPristine();
                 $scope.frmSupervisorNotification.txtLastName.$setUntouched();
+                $scope.frmSupervisorNotification.ddlSupervisor.$setPristine();
+                $scope.frmSupervisorNotification.ddlSupervisor.$setUntouched();
 
                 $scope.SubmitMessage = "Notification was submitted successfully.";
             },
@@ -57,20 +59,27 @@ app.controller('appController', function ($scope, $http, $location) {
         return $scope.frmSupervisorNotification.$invalid;
     }
 
-    
-
-
-
     function LoadSupervisors() {
         $http.get($location.absUrl() + "api/supervisors").then(
             function successCallback(response) {
                 //Initialize:
-                var defaultSupervisor = "(select a supervisor)";
-                $scope.Supervisors = response.data;
-                $scope.Supervisors.unshift(defaultSupervisor);
-                $scope.SelectedSupervisor = defaultSupervisor; //This sets the 1st (default) item, as the selected one in the list
+                var supervisorsArray = [];
+                supervisorsArray.push({
+                    Value: "",
+                    Text: "(select a supervisor)"
+                });
+                for (var i = 0; i < response.data.length; i++) {
+                    supervisorsArray.push({
+                        Value: response.data[i],
+                        Text: response.data[i]
+                    });
+                }
+
+                $scope.Supervisors = supervisorsArray;
+                $scope.SelectedSupervisor = ""; //This sets the 1st (default) item, as the selected one in the list
             },
             function errorCallback(response) {
+                $scope.SubmitMessage = "Error while loading the supervisors.";
             }
         );
     }
