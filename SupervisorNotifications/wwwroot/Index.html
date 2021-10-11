@@ -18,13 +18,15 @@
             <div class="form-row">
                 <div class="form-group col-md-6">
                     <label for="txtFirstNameId">First Name</label>
-                    <input id="txtFirstNameId" name="txtFirstName" type="text" class="form-control" ng-model="FirstName" placeholder="(enter first name)" required />
-                    <span style="color: red" ng-show="ShowFirstNameValidation()">First Name is required.</span>
+                    <input id="txtFirstNameId" name="txtFirstName" type="text" class="form-control" ng-model="FirstName" ng-change="FirstNameOnChange(FirstName)" placeholder="(enter first name)" required />
+                    <span style="color: red" ng-show="ShowFirstNameRequiredValidation()">First Name is required.</span>
+                    <span style="color:red" ng-show="ShowFirstNameNumbersValidation()">First Name contains number(s).</span>
                 </div>
                 <div class="form-group col-md-6">
                     <label for="txtLastNameId">Last Name</label>
-                    <input id="txtLastNameId" name="txtLastName" type="text" class="form-control" ng-model="LastName" placeholder="(enter last name)" required />
-                    <span style="color: red" ng-show="ShowLastNameValidation()">Last Name is required.</span>
+                    <input id="txtLastNameId" name="txtLastName" type="text" class="form-control" ng-model="LastName" ng-change="LastNameOnChange(LastName)" placeholder="(enter last name)" required />
+                    <span style="color: red" ng-show="ShowLastNameRequiredValidation()">Last Name is required.</span>
+                    <span style="color:red" ng-show="ShowLastNameNumbersValidation()">Last Name contains number(s).</span>
                 </div>
             </div>
             <div class="form-row">
@@ -51,7 +53,7 @@
                     <label for="ddlSupervisorId">Supervisor</label>
                     <select id="ddlSupervisorId" name="ddlSupervisor" class="form-control" ng-model="SelectedSupervisor"
                             ng-options="user.Value as user.Text for user in Supervisors" required></select>
-                    <span style="color: red" ng-show="ShowSupervisorValidation()">Supervisor is required.</span>
+                    <span style="color: red" ng-show="ShowSupervisorRequiredValidation()">Supervisor is required.</span>
                 </div>
             </div>
             <div class="form-row">

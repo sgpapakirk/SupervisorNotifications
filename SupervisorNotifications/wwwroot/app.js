@@ -37,19 +37,54 @@ app.controller('appController', function ($scope, $http, $location) {
         );
     }
 
-    $scope.ShowFirstNameValidation = function () {
+
+    $scope.FirstNameOnChange = function (newValue) {
+        var hasNumber = /\d/;
+        if (hasNumber.test(newValue)) {
+            $scope.frmSupervisorNotification.txtFirstName.$setValidity("hasnumbers", false);
+        }
+        else {
+            $scope.frmSupervisorNotification.txtFirstName.$setValidity("hasnumbers", true);
+        }
+    };
+
+    $scope.ShowFirstNameRequiredValidation = function () {
         return $scope.frmSupervisorNotification.txtFirstName.$dirty &&
                $scope.frmSupervisorNotification.txtFirstName.$invalid &&
                $scope.frmSupervisorNotification.txtFirstName.$error.required;
     }
 
-    $scope.ShowLastNameValidation = function () {
+    $scope.ShowFirstNameNumbersValidation = function () {
+        return $scope.frmSupervisorNotification.txtFirstName.$dirty &&
+               $scope.frmSupervisorNotification.txtFirstName.$invalid &&
+               $scope.frmSupervisorNotification.txtFirstName.$error.hasnumbers;
+    }
+
+
+    $scope.LastNameOnChange = function (newValue) {
+        var hasNumber = /\d/;
+        if (hasNumber.test(newValue)) {
+            $scope.frmSupervisorNotification.txtLastName.$setValidity("hasnumbers", false);
+        }
+        else {
+            $scope.frmSupervisorNotification.txtLastName.$setValidity("hasnumbers", true);
+        }
+    };
+
+    $scope.ShowLastNameRequiredValidation = function () {
         return $scope.frmSupervisorNotification.txtLastName.$dirty &&
                $scope.frmSupervisorNotification.txtLastName.$invalid &&
                $scope.frmSupervisorNotification.txtLastName.$error.required;
     }
 
-    $scope.ShowSupervisorValidation = function () {
+    $scope.ShowLastNameNumbersValidation = function () {
+        return $scope.frmSupervisorNotification.txtLastName.$dirty &&
+            $scope.frmSupervisorNotification.txtLastName.$invalid &&
+            $scope.frmSupervisorNotification.txtLastName.$error.hasnumbers;
+    }
+
+
+    $scope.ShowSupervisorRequiredValidation = function () {
         return $scope.frmSupervisorNotification.ddlSupervisor.$dirty &&
                $scope.frmSupervisorNotification.ddlSupervisor.$invalid &&
                $scope.frmSupervisorNotification.ddlSupervisor.$error.required;
@@ -85,5 +120,6 @@ app.controller('appController', function ($scope, $http, $location) {
     }
 
     //Initialize:
+    $scope.SubmitMessage = "";
     LoadSupervisors();
 });
