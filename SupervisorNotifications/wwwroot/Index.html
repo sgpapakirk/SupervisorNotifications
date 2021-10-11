@@ -1,0 +1,70 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
+    <script src="app.js"></script>
+</head>
+<body ng-app="app">
+    <div ng-controller="appController">
+        <form role="form" name="frmSupervisorNotification">
+            <div class="form-row">
+                <div class="form-group col-md-12">
+                    <h1>Notification Form</h1>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group col-md-6">
+                    <label for="txtFirstNameId">First Name</label>
+                    <input id="txtFirstNameId" name="txtFirstName" type="text" class="form-control" ng-model="FirstName" placeholder="(enter first name)" required />
+                    <span style="color: red" ng-show="ShowFirstNameValidation()">First Name is required.</span>
+                </div>
+                <div class="form-group col-md-6">
+                    <label for="txtLastNameId">Last Name</label>
+                    <input id="txtLastNameId" name="txtLastName" type="text" class="form-control" ng-model="LastName" placeholder="(enter last name)" required />
+                    <span style="color: red" ng-show="ShowLastNameValidation()">Last Name is required.</span>
+                </div>
+            </div>
+            <div class="form-row">
+                <label>How would you prefer to be notified?</label>
+            </div>
+            <div class="form-row">
+                <div class="form-group col-md-6">
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="checkbox" id="chkEmail" />
+                        <label class="form-check-label" for="chkEmail">Email</label>
+                    </div>
+                    <input type="email" class="form-control" id="txtEmail" placeholder="(enter email address)" />
+                </div>
+                <div class="form-group col-md-6">
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="checkbox" id="chkPhoneNumber" />
+                        <label class="form-check-label" for="chkPhoneNumber">Phone Number</label>
+                    </div>
+                    <input type="tel" class="form-control" id="txtPhoneNumber" placeholder="(enter phone number)" />
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group col-md-6 offset-md-3">
+                    <label for="ddlSupervisorId">Supervisor</label>
+                    <select id="ddlSupervisorId" name="ddlSupervisor" class="form-control" ng-model="SelectedSupervisor"
+                            ng-options="supervisor as supervisor for supervisor in Supervisors" required></select>
+                    <span style="color: red" ng-show="ShowSupervisorValidation()">Supervisor is required.</span>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group col-md-3 offset-md-5">
+                    <button type="button" class="btn btn-primary active" ng-click="SubmitSupervisorNotification()" ng-disabled="SubmitButtonDisabled()">SUBMIT</button>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group col-md-12">
+                    <span style="color: red">{{ SubmitMessage }}</span>
+                </div>
+            </div>
+        </form>
+    </div>
+</body>
+</html>
