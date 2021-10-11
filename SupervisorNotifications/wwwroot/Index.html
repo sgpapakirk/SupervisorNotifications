@@ -35,17 +35,18 @@
             <div class="form-row">
                 <div class="form-group col-md-6">
                     <div class="form-check form-check-inline">
-                        <input class="form-check-input" type="checkbox" id="chkEmail" />
-                        <label class="form-check-label" for="chkEmail">Email</label>
+                        <input id="chkEmailId" name="chkEmail" class="form-check-input" type="checkbox" ng-model="UsesEmail" ng-change="CheckEmailOnChange(UsesEmail)" />
+                        <label class="form-check-label" for="chkEmailId">Email</label>
                     </div>
-                    <input type="email" class="form-control" id="txtEmail" placeholder="(enter email address)" />
+                    <input id="txtEmailId" name="txtEmail" type="email" class="form-control" ng-model="Email" ng-disabled="TextEmailDisabled" ng-change="OneRequiredOnChange()" placeholder="(enter email address)" />
+                    <span style="color: red" ng-show="ShowOneRequiredValidation()">Either the Email or the Phone Number is required.</span>
                 </div>
                 <div class="form-group col-md-6">
                     <div class="form-check form-check-inline">
-                        <input class="form-check-input" type="checkbox" id="chkPhoneNumber" />
-                        <label class="form-check-label" for="chkPhoneNumber">Phone Number</label>
+                        <input id="chkPhoneNumberId" name="chkPhoneNumber" class="form-check-input" type="checkbox" ng-model="UsesPhoneNumber" ng-change="CheckPhoneNumberOnChange(UsesPhoneNumber)" />
+                        <label class="form-check-label" for="chkPhoneNumberId">Phone Number</label>
                     </div>
-                    <input type="tel" class="form-control" id="txtPhoneNumber" placeholder="(enter phone number)" />
+                    <input id="txtPhoneNumberId" name="txtPhoneNumber" type="tel" class="form-control" ng-model="PhoneNumber" ng-disabled="TextPhoneNumberDisabled" ng-change="OneRequiredOnChange()" placeholder="(enter phone number)" />
                 </div>
             </div>
             <div class="form-row">

@@ -17,17 +17,23 @@ app.controller('appController', function ($scope, $http, $location) {
                 //Reset our form:
                 $scope.FirstName = "";
                 $scope.LastName = "";
-                $scope.Email = "";
-                $scope.PhoneNumber = "";
+                $scope.UsesEmail = false;
+                $scope.CheckEmailOnChange(false);
+                $scope.UsesPhoneNumber = false;
+                $scope.CheckPhoneNumberOnChange(false);
+                $scope.OneRequiredOnChange();
                 $scope.SelectedSupervisor = ""; //This sets the 1st (default) item, as the selected one in the list
 
-                //Reset the validation of these controls:
                 $scope.frmSupervisorNotification.txtFirstName.$setPristine();
                 $scope.frmSupervisorNotification.txtFirstName.$setUntouched();
                 $scope.frmSupervisorNotification.txtLastName.$setPristine();
                 $scope.frmSupervisorNotification.txtLastName.$setUntouched();
                 $scope.frmSupervisorNotification.ddlSupervisor.$setPristine();
                 $scope.frmSupervisorNotification.ddlSupervisor.$setUntouched();
+                $scope.frmSupervisorNotification.txtEmail.$setPristine();
+                $scope.frmSupervisorNotification.txtEmail.$setUntouched();
+                $scope.frmSupervisorNotification.txtPhoneNumber.$setPristine();
+                $scope.frmSupervisorNotification.txtPhoneNumber.$setUntouched();
 
                 $scope.SubmitMessage = "Notification was submitted successfully.";
             },
@@ -37,7 +43,7 @@ app.controller('appController', function ($scope, $http, $location) {
         );
     }
 
-
+    //First Name functions:
     $scope.FirstNameOnChange = function (newValue) {
         var hasNumber = /\d/;
         if (hasNumber.test(newValue)) {
@@ -46,7 +52,7 @@ app.controller('appController', function ($scope, $http, $location) {
         else {
             $scope.frmSupervisorNotification.txtFirstName.$setValidity("hasnumbers", true);
         }
-    };
+    }
 
     $scope.ShowFirstNameRequiredValidation = function () {
         return $scope.frmSupervisorNotification.txtFirstName.$dirty &&
@@ -60,7 +66,7 @@ app.controller('appController', function ($scope, $http, $location) {
                $scope.frmSupervisorNotification.txtFirstName.$error.hasnumbers;
     }
 
-
+    //Last Name functions:
     $scope.LastNameOnChange = function (newValue) {
         var hasNumber = /\d/;
         if (hasNumber.test(newValue)) {
@@ -69,7 +75,7 @@ app.controller('appController', function ($scope, $http, $location) {
         else {
             $scope.frmSupervisorNotification.txtLastName.$setValidity("hasnumbers", true);
         }
-    };
+    }
 
     $scope.ShowLastNameRequiredValidation = function () {
         return $scope.frmSupervisorNotification.txtLastName.$dirty &&
@@ -79,10 +85,43 @@ app.controller('appController', function ($scope, $http, $location) {
 
     $scope.ShowLastNameNumbersValidation = function () {
         return $scope.frmSupervisorNotification.txtLastName.$dirty &&
-            $scope.frmSupervisorNotification.txtLastName.$invalid &&
-            $scope.frmSupervisorNotification.txtLastName.$error.hasnumbers;
+               $scope.frmSupervisorNotification.txtLastName.$invalid &&
+               $scope.frmSupervisorNotification.txtLastName.$error.hasnumbers;
     }
 
+    //Email functions:
+    $scope.CheckEmailOnChange = function (checked) {
+        $scope.TextEmailDisabled = !checked;
+        if ($scope.TextEmailDisabled) {
+            $scope.Email = "";
+        }
+    }
+
+    $scope.OneRequiredOnChange = function () {
+        if ($scope.Email === "" &&
+            $scope.PhoneNumber === "") {
+            $scope.frmSupervisorNotification.txtEmail.$setValidity("onerequired", false);
+        }
+        else {
+            $scope.frmSupervisorNotification.txtEmail.$setValidity("onerequired", true);
+        }
+    }
+
+    //Phone Number functions:
+    $scope.CheckPhoneNumberOnChange = function (checked) {
+        $scope.TextPhoneNumberDisabled = !checked;
+        if ($scope.TextPhoneNumberDisabled) {
+            $scope.PhoneNumber = "";
+        }
+    }
+
+    //Rest of functions:
+    $scope.ShowOneRequiredValidation = function () {
+        return $scope.Email === "" &&
+               $scope.PhoneNumber === "" &&
+               ($scope.frmSupervisorNotification.txtEmail.$dirty ||
+                $scope.frmSupervisorNotification.txtPhoneNumber.$dirty);
+    }
 
     $scope.ShowSupervisorRequiredValidation = function () {
         return $scope.frmSupervisorNotification.ddlSupervisor.$dirty &&
@@ -121,5 +160,11 @@ app.controller('appController', function ($scope, $http, $location) {
 
     //Initialize:
     $scope.SubmitMessage = "";
+    $scope.Email = "";
+    $scope.UsesEmail = false;
+    $scope.TextEmailDisabled = true;
+    $scope.PhoneNumber = "";
+    $scope.UsesPhoneNumber = false;
+    $scope.TextPhoneNumberDisabled = true;
     LoadSupervisors();
 });
