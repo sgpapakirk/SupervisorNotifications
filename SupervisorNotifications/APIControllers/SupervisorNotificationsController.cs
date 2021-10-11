@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
+using Microsoft.Extensions.Logging;
 using SupervisorNotifications.Models;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
@@ -18,14 +19,17 @@ namespace SupervisorNotifications.APIControllers
     public class SupervisorNotificationsController : ControllerBase
     {
         private readonly IConfiguration _Configuration;
+        private readonly ILogger<SupervisorNotificationsController> _ILogger;
 
         /// <summary>
         /// SupervisorNotificationsController
         /// </summary>
-        /// <param name="configuration"></param>
-        public SupervisorNotificationsController(IConfiguration configuration)
+        /// <param name="configuration">configuration</param>
+        /// <param name="logger">logger</param>
+        public SupervisorNotificationsController(IConfiguration configuration, ILogger<SupervisorNotificationsController> logger)
         {
             _Configuration = configuration;
+            _ILogger = logger;
         }
 
         [HttpGet("supervisors")]
@@ -82,18 +86,17 @@ namespace SupervisorNotifications.APIControllers
         {
             try
             {
-                Console.WriteLine("Submitted supervisorNotification object:");
+                const string firstLogLine = "Submitted supervisorNotification object:\n";
+                //Alternatively you can use Console.WriteLine method calls
                 if (supervisorNotification == null)
                 {
-                    Console.WriteLine("null object");
+                    _ILogger.LogInformation(firstLogLine + "null object");
                 }
                 else
                 {
-                    Console.WriteLine("FirstName: {0}", supervisorNotification.FirstName);
-                    Console.WriteLine("LastName: {0}", supervisorNotification.LastName);
-                    Console.WriteLine("Email: {0}", supervisorNotification.Email);
-                    Console.WriteLine("PhoneNumber: {0}", supervisorNotification.PhoneNumber);
-                    Console.WriteLine("Supervisor: {0}", supervisorNotification.Supervisor);
+                    _ILogger.LogInformation(firstLogLine + "FirstName: {0}\nLastName: {1}\nEmail: {2}\nPhoneNumber: {3}\nSupervisor: {4}",
+                                            supervisorNotification.FirstName, supervisorNotification.LastName, supervisorNotification.Email,
+                                            supervisorNotification.PhoneNumber, supervisorNotification.Supervisor);
                 }
 
                 //Check the passed model state to see if there are any errors:
