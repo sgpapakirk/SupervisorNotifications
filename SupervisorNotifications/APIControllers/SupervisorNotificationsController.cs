@@ -74,39 +74,41 @@ namespace SupervisorNotifications.APIControllers
             }
         }
 
+        [HttpPost("submit")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(typeof(string), StatusCodes.Status500InternalServerError)]
+        [ProducesResponseType(typeof(string), StatusCodes.Status400BadRequest)]
+        public IActionResult CreateSupervisorNotification([FromBody] SupervisorNotification supervisorNotification)
+        {
+            try
+            {
+                Console.WriteLine("Submitted supervisorNotification object:");
+                if (supervisorNotification == null)
+                {
+                    Console.WriteLine("null object");
+                }
+                else
+                {
+                    Console.WriteLine("FirstName: {0}", supervisorNotification.FirstName);
+                    Console.WriteLine("LastName: {0}", supervisorNotification.LastName);
+                    Console.WriteLine("Email: {0}", supervisorNotification.Email);
+                    Console.WriteLine("PhoneNumber: {0}", supervisorNotification.PhoneNumber);
+                    Console.WriteLine("Supervisor: {0}", supervisorNotification.Supervisor);
+                }
 
+                //Check the passed model state to see if there are any errors:
+                if (!ModelState.IsValid)
+                {
+                    return BadRequest(ModelState);
+                }
 
-
-        // GET: api/<SupervisorNotificationsController>
-        //[HttpGet]
-        //public IEnumerable<string> Get()
-        //{
-        //    return new string[] { "value1", "value2" };
-        //}
-
-        // GET api/<SupervisorNotificationsController>/5
-        //[HttpGet("{id}")]
-        //public string Get(int id)
-        //{
-        //    return "value";
-        //}
-
-        // POST api/<SupervisorNotificationsController>
-        //[HttpPost]
-        //public void Post([FromBody] string value)
-        //{
-        //}
-
-        // PUT api/<SupervisorNotificationsController>/5
-        //[HttpPut("{id}")]
-        //public void Put(int id, [FromBody] string value)
-        //{
-        //}
-
-        // DELETE api/<SupervisorNotificationsController>/5
-        //[HttpDelete("{id}")]
-        //public void Delete(int id)
-        //{
-        //}
+                return NoContent();
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError,
+                                  string.Concat("Server error: ", ex.Message));
+            }
+        }
     }
 }
