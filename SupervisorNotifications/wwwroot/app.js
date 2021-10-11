@@ -86,6 +86,12 @@ app.controller('appController', function ($scope, $http, $location) {
         }
     }
 
+    $scope.ShowEmailValidation = function () {
+        return $scope.frmSupervisorNotification.txtEmail.$dirty &&
+               $scope.frmSupervisorNotification.txtEmail.$invalid &&
+               $scope.frmSupervisorNotification.txtEmail.$error.email;
+    }
+
     //Phone Number functions:
     $scope.CheckPhoneNumberOnChange = function (checked) {
         $scope.TextPhoneNumberDisabled = !checked;
