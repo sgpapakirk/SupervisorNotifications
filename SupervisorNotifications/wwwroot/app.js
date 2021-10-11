@@ -94,6 +94,14 @@ app.controller('appController', function ($scope, $http, $location) {
         }
     }
 
+    $scope.ShowPhoneNumberValidation = function () {
+        return $scope.frmSupervisorNotification.txtPhoneNumber.$dirty &&
+               $scope.frmSupervisorNotification.txtPhoneNumber.$invalid &&
+               ($scope.frmSupervisorNotification.txtPhoneNumber.$error.pattern ||
+                $scope.frmSupervisorNotification.txtPhoneNumber.$error.minlength ||
+                $scope.frmSupervisorNotification.txtPhoneNumber.$error.maxlength);
+    }
+
     //Rest of functions:
     $scope.ShowOneRequiredValidation = function () {
         var isInvalid = $scope.Email === "" &&

@@ -18,13 +18,13 @@
             <div class="form-row">
                 <div class="form-group col-md-6">
                     <label for="txtFirstNameId">First Name</label>
-                    <input id="txtFirstNameId" name="txtFirstName" type="text" class="form-control" ng-model="FirstName" ng-change="FirstNameOnChange(FirstName)" placeholder="(enter first name)" required />
+                    <input id="txtFirstNameId" name="txtFirstName" type="text" class="form-control" ng-model="FirstName" ng-change="FirstNameOnChange(FirstName)" placeholder="example: Steve" required />
                     <span style="color: red" ng-show="ShowFirstNameRequiredValidation()">First Name is required.</span>
                     <span style="color:red" ng-show="ShowFirstNameNumbersValidation()">First Name contains number(s).</span>
                 </div>
                 <div class="form-group col-md-6">
                     <label for="txtLastNameId">Last Name</label>
-                    <input id="txtLastNameId" name="txtLastName" type="text" class="form-control" ng-model="LastName" ng-change="LastNameOnChange(LastName)" placeholder="(enter last name)" required />
+                    <input id="txtLastNameId" name="txtLastName" type="text" class="form-control" ng-model="LastName" ng-change="LastNameOnChange(LastName)" placeholder="example: Jones" required />
                     <span style="color: red" ng-show="ShowLastNameRequiredValidation()">Last Name is required.</span>
                     <span style="color:red" ng-show="ShowLastNameNumbersValidation()">Last Name contains number(s).</span>
                 </div>
@@ -38,7 +38,7 @@
                         <input id="chkEmailId" name="chkEmail" class="form-check-input" type="checkbox" ng-model="UsesEmail" ng-change="CheckEmailOnChange(UsesEmail)" />
                         <label class="form-check-label" for="chkEmailId">Email</label>
                     </div>
-                    <input id="txtEmailId" name="txtEmail" type="text" class="form-control" ng-model="Email" ng-disabled="TextEmailDisabled" placeholder="(enter email address)" />
+                    <input id="txtEmailId" name="txtEmail" type="text" class="form-control" ng-model="Email" ng-disabled="TextEmailDisabled" placeholder="example: steve.jones@acme.com" />
                     <span style="color: red" ng-show="ShowOneRequiredValidation()">Either the Email or the Phone Number is required.</span>
                 </div>
                 <div class="form-group col-md-6">
@@ -46,7 +46,9 @@
                         <input id="chkPhoneNumberId" name="chkPhoneNumber" class="form-check-input" type="checkbox" ng-model="UsesPhoneNumber" ng-change="CheckPhoneNumberOnChange(UsesPhoneNumber)" />
                         <label class="form-check-label" for="chkPhoneNumberId">Phone Number</label>
                     </div>
-                    <input id="txtPhoneNumberId" name="txtPhoneNumber" type="tel" class="form-control" ng-model="PhoneNumber" ng-disabled="TextPhoneNumberDisabled" placeholder="(enter phone number)" />
+                    <input id="txtPhoneNumberId" name="txtPhoneNumber" type="tel" class="form-control" ng-model="PhoneNumber" ng-disabled="TextPhoneNumberDisabled"
+                           ng-pattern="/^\d{3}-\d{3}-\d{4}$/" minlength="12" ng-minlength="12" maxlength="12" ng-maxlength="12" placeholder="example: 724-475-4562" />
+                    <span style="color: red" ng-show="ShowPhoneNumberValidation()">Phone Number is invalid. Example: 724-475-4562</span>
                 </div>
             </div>
             <div class="form-row">
