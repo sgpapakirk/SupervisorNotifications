@@ -21,7 +21,6 @@ app.controller('appController', function ($scope, $http, $location) {
                 $scope.CheckEmailOnChange(false);
                 $scope.UsesPhoneNumber = false;
                 $scope.CheckPhoneNumberOnChange(false);
-                $scope.OneRequiredOnChange();
                 $scope.SelectedSupervisor = ""; //This sets the 1st (default) item, as the selected one in the list
 
                 $scope.frmSupervisorNotification.txtFirstName.$setPristine();
@@ -45,13 +44,8 @@ app.controller('appController', function ($scope, $http, $location) {
 
     //First Name functions:
     $scope.FirstNameOnChange = function (newValue) {
-        var hasNumber = /\d/;
-        if (hasNumber.test(newValue)) {
-            $scope.frmSupervisorNotification.txtFirstName.$setValidity("hasnumbers", false);
-        }
-        else {
-            $scope.frmSupervisorNotification.txtFirstName.$setValidity("hasnumbers", true);
-        }
+        var isInvalid = ContainsNumber(newValue);
+        $scope.frmSupervisorNotification.txtFirstName.$setValidity("hasnumber", !isInvalid);
     }
 
     $scope.ShowFirstNameRequiredValidation = function () {
@@ -63,18 +57,13 @@ app.controller('appController', function ($scope, $http, $location) {
     $scope.ShowFirstNameNumbersValidation = function () {
         return $scope.frmSupervisorNotification.txtFirstName.$dirty &&
                $scope.frmSupervisorNotification.txtFirstName.$invalid &&
-               $scope.frmSupervisorNotification.txtFirstName.$error.hasnumbers;
+               $scope.frmSupervisorNotification.txtFirstName.$error.hasnumber;
     }
 
     //Last Name functions:
     $scope.LastNameOnChange = function (newValue) {
-        var hasNumber = /\d/;
-        if (hasNumber.test(newValue)) {
-            $scope.frmSupervisorNotification.txtLastName.$setValidity("hasnumbers", false);
-        }
-        else {
-            $scope.frmSupervisorNotification.txtLastName.$setValidity("hasnumbers", true);
-        }
+        var isInvalid = ContainsNumber(newValue);
+         $scope.frmSupervisorNotification.txtLastName.$setValidity("hasnumber", !isInvalid);
     }
 
     $scope.ShowLastNameRequiredValidation = function () {
@@ -86,7 +75,7 @@ app.controller('appController', function ($scope, $http, $location) {
     $scope.ShowLastNameNumbersValidation = function () {
         return $scope.frmSupervisorNotification.txtLastName.$dirty &&
                $scope.frmSupervisorNotification.txtLastName.$invalid &&
-               $scope.frmSupervisorNotification.txtLastName.$error.hasnumbers;
+               $scope.frmSupervisorNotification.txtLastName.$error.hasnumber;
     }
 
     //Email functions:
@@ -94,16 +83,6 @@ app.controller('appController', function ($scope, $http, $location) {
         $scope.TextEmailDisabled = !checked;
         if ($scope.TextEmailDisabled) {
             $scope.Email = "";
-        }
-    }
-
-    $scope.OneRequiredOnChange = function () {
-        if ($scope.Email === "" &&
-            $scope.PhoneNumber === "") {
-            $scope.frmSupervisorNotification.txtEmail.$setValidity("onerequired", false);
-        }
-        else {
-            $scope.frmSupervisorNotification.txtEmail.$setValidity("onerequired", true);
         }
     }
 
@@ -117,8 +96,11 @@ app.controller('appController', function ($scope, $http, $location) {
 
     //Rest of functions:
     $scope.ShowOneRequiredValidation = function () {
-        return $scope.Email === "" &&
-               $scope.PhoneNumber === "" &&
+        var isInvalid = $scope.Email === "" &&
+                        $scope.PhoneNumber === "";
+        $scope.frmSupervisorNotification.txtEmail.$setValidity("onerequired", !isInvalid);
+
+        return isInvalid &&
                ($scope.frmSupervisorNotification.txtEmail.$dirty ||
                 $scope.frmSupervisorNotification.txtPhoneNumber.$dirty);
     }
@@ -131,6 +113,11 @@ app.controller('appController', function ($scope, $http, $location) {
 
     $scope.SubmitButtonDisabled = function () {
         return $scope.frmSupervisorNotification.$invalid;
+    }
+
+    function ContainsNumber(newValue) {
+        var hasNumberRegEx = /\d/;
+        return hasNumberRegEx.test(newValue);
     }
 
     function LoadSupervisors() {
